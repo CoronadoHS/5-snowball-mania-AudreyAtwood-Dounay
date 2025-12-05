@@ -1,7 +1,7 @@
 ''' 
     Name: Snowball-Mania
-    Author: 
-    Date: 
+    Author: Audrey Atwood-Dounay
+    Date: 5/12/25
     Class: AP Computer Science Principles
     Python: 
 '''
@@ -47,7 +47,8 @@ def getThrower(players):
     '
     ' Return: player name
     '''
-
+    thrower = random.choice(players)
+    return thrower
     
 def getVictim(players, t):
     '''
@@ -59,6 +60,10 @@ def getVictim(players, t):
     '
     ' Return: victim's name
     '''
+    victim = random.choice(players)
+    while (t == victim):
+        victim = random.choice(players)
+    return victim
 
 
 def getHitResult():
@@ -66,12 +71,17 @@ def getHitResult():
     ' Param: none
     ' 
     ' Generate a random number between 1 and 10
-    ' If the number is greater than ___, return True
+    ' If the number is greater than 4(60%), return True
     ' Else, return False
     '
     ' Return: Boolean representing whether or not the snowball hit
     '''
-    
+    hitNum = random.randint(1, 10)
+    if (hitNum > 4):
+        return True
+    else:
+        return False
+
 
 def playSnowballFight(players):
     '''
@@ -90,6 +100,23 @@ def playSnowballFight(players):
     ' Return: none
     '''
 
+    while (len(players) > 1):
+        thrower = getThrower(players)
+        victim = getVictim(players, thrower)
+        hitResult = getHitResult() 
+
+        if (hitResult == True):
+            koResult = random.randint(1, 2) #1 = not knockout, 2 = knockout
+            if (koResult ==1):
+                print(thrower + " throws at " + victim +  " and hits, but " + victim + " survives!" )
+            else:
+               print(thrower + " absolutely destroys " + victim +  " and " + victim + " is eliminated!" )
+               players.remove(victim)
+
+        else:
+            print(thrower + " throws at " + victim + " but has really bad aim and misses. ")
+            time.sleep(3)
+             
     
 def printOutro(winner):
     '''
@@ -100,7 +127,7 @@ def printOutro(winner):
     ' Return: none
     '''
     print("❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️")
-    print("All hail " + winner + ", the Ultimate Student/Snowball Wizard!")
+    print("All hail " + winner + ", the Ultimate Snowball Wizard!")
     print("❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️❄️")
 
 
@@ -115,3 +142,23 @@ def runProgram():
     '
     ' Return: none
     '''
+    printIntro()
+
+
+runProgram()
+
+
+
+testPlayers = ["John", "Taylor", "Will", "Jack"]
+playSnowballFight(testPlayers)
+printOutro(testPlayers[0])
+# testThrower = getThrower(testPlayers)
+# testVictim = getVictim(testPlayers, testThrower)
+# testHit = getHitResult()
+# successful hit
+# if (testHit == True):
+#     print(testThrower + " throws at " + testVictim + " - HIT")
+
+# miss
+# else:
+#     print(testThrower + " throws at " + testVictim + " - MISS")
